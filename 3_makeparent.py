@@ -69,7 +69,7 @@ http = credentials.authorize(http)
 drive_service = build('drive', 'v2', http=http)
 fileId = '1VO91_rtz34CMM0l2CcsNihFjcQ-WLpHbRQBJGoEVoHk'
 #print_parents(drive_service,fileId)
-make_parent(drive_service,'0B7OPm7m4AgrncTB0M3JnRmVkR3M','petss')
+make_parent(drive_service,'0B7OPm7m4AgrnU3NoVG5KRDM0d2M','Test Folder')
 '''
 # Insert a file
 media_body = MediaFileUpload(FILENAME, mimetype='text/plain', resumable=True)

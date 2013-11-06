@@ -58,17 +58,5 @@ http = httplib2.Http()
 http = credentials.authorize(http)
 
 drive_service = build('drive', 'v2', http=http)
-fileId = '1VO91_rtz34CMM0l2CcsNihFjcQ-WLpHbRQBJGoEVoHk'
+fileId = '0B7OPm7m4AgrnZFZmeFpFVGtBdGM'
 print_parents(drive_service,fileId)
-'''
-# Insert a file
-media_body = MediaFileUpload(FILENAME, mimetype='text/plain', resumable=True)
-body = {
-  'title': 'My document',
-  'description': 'A test document',
-  'mimeType': 'text/plain'
-}
-
-file = drive_service.files().insert(body=body, media_body=media_body).execute()
-pprint.pprint(file)
-'''

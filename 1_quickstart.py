@@ -10,11 +10,10 @@ from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.file import Storage
 
 # Get your client secret / client id from the client_secret.json file
-json_data = open('client_secret.json')
-data = json.load(json_data)
-CLIENT_ID = data["client_id"]
-CLIENT_SECRET = data["client_secret"]
-json_data.close()
+with open('client_secret.json') as json_data:
+  data = json.load(json_data)
+  CLIENT_ID = data["client_id"]
+  CLIENT_SECRET = data["client_secret"]
 
 # Check https://developers.google.com/drive/scopes for all available scopes
 OAUTH_SCOPE = 'https://www.googleapis.com/auth/drive'
