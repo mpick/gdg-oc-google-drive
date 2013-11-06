@@ -17,3 +17,7 @@ Secret.
 6. Install Google API python client
  https://developers.google.com/api-client-library/python/start/installation
 
+ To continue learning how to work with the Google Drive API, here are a few links to helpful tutorials
+ "DrEdit" in python https://developers.google.com/drive/examples/python
+ https://developer.chrome.com/apps/angular_framework.html#second (Creating a Chrome App)
+
