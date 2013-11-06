@@ -11,12 +11,6 @@ from oauth2client.file import Storage
 from apiclient import errors
 
 def print_parents(service, file_id):
-  """Print a file's parents.
-
-  Args:
-    service: Drive API service instance.
-    file_id: ID of the file to print parents for.
-  """
   try:
     parents = service.parents().list(fileId=file_id).execute()
     for parent in parents['items']:
@@ -24,7 +18,7 @@ def print_parents(service, file_id):
   except errors.HttpError, error:
     print 'An error occurred: %s' % error
 
-# Copy your credentials from the console
+# Get your client secret / client id from the client_secret.json file
 json_data = open('client_secret.json')
 data = json.load(json_data)
 CLIENT_ID = data["client_id"]
