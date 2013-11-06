@@ -2,39 +2,21 @@
 
 import httplib2
 import pprint
+import gzip
+import os
+import json
 
 from apiclient.discovery import build
 from apiclient.http import MediaFileUpload
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.file import Storage
-from apiclient import errors
 
-def make_parent(service, file_id, name):
-  body = {
-    'title' : name,
-    'parents' : [{'id':file_id}],
-    "mimeType": "application/vnd.google-apps.folder"
-    }
-  file = drive_service.files().insert(body=body).execute() 
-  pprint.pprint(file) 
-
-def print_parents(service, file_id):
-  """Print a file's parents.
-
-  Args:
-    service: Drive API service instance.
-    file_id: ID of the file to print parents for.
-  """
-  try:
-    parents = service.parents().list(fileId=file_id).execute()
-    for parent in parents['items']:
-      print 'File Id: %s' % parent['id']
-  except errors.HttpError, error:
-    print 'An error occurred: %s' % error
-
-# Copy your credentials from the console
-CLIENT_ID = '331847266991.apps.googleusercontent.com' #'YOUR_CLIENT_ID'
-CLIENT_SECRET = 'PJNQLdTRMH0tlJuEcAfUU-Mu' #'YOUR_CLIENT_SECRET'
+# Get your client secret / client id from the client_secret.json file
+json_data = open('client_secret.json')
+data = json.load(json_data)
+CLIENT_ID = data["client_id"]
+CLIENT_SECRET = data["client_secret"]
+json_data.close()
 
 # Check https://developers.google.com/drive/scopes for all available scopes
 OAUTH_SCOPE = 'https://www.googleapis.com/auth/drive'
@@ -43,7 +25,8 @@ OAUTH_SCOPE = 'https://www.googleapis.com/auth/drive'
 REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
 
 # Path to the file to upload
-FILENAME = 'document.txt'
+indir = '/Users/miles/Documents/mysqlbkups/20131104'
+
 
 # Path to the credentials
 CRED_FILENAME = 'credentials'
@@ -69,18 +52,25 @@ http = httplib2.Http()
 http = credentials.authorize(http)
 
 drive_service = build('drive', 'v2', http=http)
-fileId = '1VO91_rtz34CMM0l2CcsNihFjcQ-WLpHbRQBJGoEVoHk'
-#print_parents(drive_service,fileId)
-make_parent(drive_service,'0B7OPm7m4AgrncTB0M3JnRmVkR3M','petss')
-'''
+parentId = '0BztgnRMh-JmyZzEwNkFLTjFaM0E'
 # Insert a file
-media_body = MediaFileUpload(FILENAME, mimetype='text/plain', resumable=True)
-body = {
-  'title': 'My document',
-  'description': 'A test document',
-  'mimeType': 'text/plain'
-}
+for root, dirs, filenames in os.walk(indir):
+    for f in filenames:
+        print root + '/' + f
+        # Gzip the file
+        f_in = open( root + '/' + f, 'rb')
+        f_out = gzip.open( f + '.gz', 'wb')
+        f_out.writelines(f_in)
+        f_out.close()
+        f_in.close()
 
-file = drive_service.files().insert(body=body, media_body=media_body).execute()
-pprint.pprint(file)
-'''
+        media_body = MediaFileUpload(f + '.gz' , mimetype='text/plain', resumable=True)
+        body = {
+          'title': f + '.gz',
+          'description': 'A SQL Backup File for the DME application',
+          'mimeType': 'text/plain',
+          'parents': [{'id':parentId}]
+        }
+
+        file = drive_service.files().insert(body=body, media_body=media_body).execute()
+        pprint.pprint(file)

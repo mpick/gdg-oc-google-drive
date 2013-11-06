@@ -2,15 +2,19 @@
 
 import httplib2
 import pprint
+import json
 
 from apiclient.discovery import build
 from apiclient.http import MediaFileUpload
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.file import Storage
 
-# Copy your credentials from the console
-CLIENT_ID = '331847266991.apps.googleusercontent.com' #'YOUR_CLIENT_ID'
-CLIENT_SECRET = 'PJNQLdTRMH0tlJuEcAfUU-Mu' #'YOUR_CLIENT_SECRET'
+# Get your client secret / client id from the client_secret.json file
+json_data = open('client_secret.json')
+data = json.load(json_data)
+CLIENT_ID = data["client_id"]
+CLIENT_SECRET = data["client_secret"]
+json_data.close()
 
 # Check https://developers.google.com/drive/scopes for all available scopes
 OAUTH_SCOPE = 'https://www.googleapis.com/auth/drive'

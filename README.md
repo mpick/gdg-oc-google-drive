@@ -3,6 +3,9 @@ gdg-oc-google-drive
 
 Our meetup on 11/05/2013 used this repo.
 
+links: https://developers.google.com/drive/quickstart-python
+
+
 1. Create a new Project on the Google API Console
 https://code.google.com/apis/console
 2. Go to "Services" and enable Google Drive API and SDK
@@ -13,3 +16,4 @@ Secret.
  https://pypi.python.org/pypi/setuptools
 6. Install Google API python client
  https://developers.google.com/api-client-library/python/start/installation
+
