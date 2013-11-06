@@ -27,8 +27,8 @@ def print_parents(service, file_id):
 # Copy your credentials from the console
 json_data = open('client_secret.json')
 data = json.load(json_data)
-CLIENT_ID = data["client_id"] #'331847266991.apps.googleusercontent.com' #'YOUR_CLIENT_ID'
-CLIENT_SECRET = data["client_secret"] #'PJNQLdTRMH0tlJuEcAfUU-Mu' #'YOUR_CLIENT_SECRET'
+CLIENT_ID = data["client_id"]
+CLIENT_SECRET = data["client_secret"]
 json_data.close()
 
 # Check https://developers.google.com/drive/scopes for all available scopes
